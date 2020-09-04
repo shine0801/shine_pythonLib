@@ -1,13 +1,11 @@
-# @Time : 2020/7/3 20:16 
+# @Time : 2020/8/5 10:30 
 # @Author : ShineJo
-# @File : img_resize.py 
+# @File : test.py 
 # @Software: PyCharm
-# @Function: 等比例放缩图片
+# @Function:
 
 import cv2
-
-"""等比例放缩图片，返回放缩后的图片和放缩比例"""
-
+import xml.etree.ElementTree as ET
 
 def img_resize(img, max_len):
     height, width = img.shape[0], img.shape[1]
@@ -24,17 +22,14 @@ def img_resize(img, max_len):
     return img_new, rate
 
 
-if __name__ == '__main__':
-    img_path = "image/cat.jpg"
-    image = cv2.imread(img_path)
-    print(image.shape)
-    resized_img, r = img_resize(image, 100)
-    print(resized_img.shape)
-    cv2.imshow("img", resized_img)
-    cv2.waitKey(0)
+img = cv2.imread("img/1.jpg")
+# cv2.rectangle(img, (132, 117), (195, 184), (255, 0, 0), 2)
+# cv2.rectangle(img, (132, 139), (195, 184), (255, 255, 0), 2)
+# cv2.imshow('img', img)
+img1 = img[117:184, 132:195]
 
+img2, r = img_resize(img1, 608)
+cv2.imshow('img2', img2)
 
-
-
-
+cv2.waitKey(0)
 
