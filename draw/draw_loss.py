@@ -1,8 +1,13 @@
-# @Time : 2020/8/13 10:17 
-# @Author : ShineJo
-# @File : test.py 
-# @Software: PyCharm
-# @Function:
+# -*- coding: utf-8 -*-
+"""
+**********************************
+   File Name：     gen_loss
+   Description :   绘制loss(val\train)
+   Author :       shine
+   date：          2020/9/28
+**********************************
+"""
+
 import os
 import matplotlib.pyplot as plt
 import numpy as np
@@ -42,16 +47,12 @@ def draw_pic(info_list):
     x = np.arange(0, len(info_list))
     y1 = list(map(float, info_list[..., 1]))
     y2 = list(map(float, info_list[..., 2]))
-
-    print(y1)
-    print(y2)
-
     # 制作坐标轴
     my_x_ticks = np.arange(0, len(info_list), 5)
     plt.xticks(my_x_ticks)
     plt.xlabel('epoche')
 
-    my_y_ticks = np.arange(1, 50, 4)
+    my_y_ticks = np.arange(0,5000,50)
     plt.yticks(my_y_ticks)
     plt.ylabel('loss')
 
@@ -62,18 +63,25 @@ def draw_pic(info_list):
     plt.show()
 
 
-file = 'weight.txt'
-info_list = []
-with open(file, 'r') as f:
-    lines = f.readlines()
-    for line in lines:
-        filename = os.path.splitext(line)[0]
-        tem_list = get_num(filename)
-        info_list.append(tem_list)
+if __name__ == "__main__":
+    # .h5文件路径
+    path = 'E:/pythonwork/yolov4/logs'
+    lists = os.listdir(path)
+    info_list = []
+    for item in lists:
+        flag = os.path.isfile(os.path.join(path, item))
+        if flag:
+           filename = os.path.splitext(str(item))[0]
+           tem_list = get_num(filename)
+           info_list.append(tem_list)
     # 排序
     info_list = my_sort(info_list)
     info_list = np.array(info_list)
+
     # 绘制
     draw_pic(info_list)
- # 绘制
+
+
+
+
 

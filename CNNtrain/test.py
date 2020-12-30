@@ -28,7 +28,7 @@ def train_step(x_train, y_train, my_loss, net, optimizer, regularization):
     return loss_value
 
 
-# 训练某一伦次
+# 训练某一轮次
 def fit_one_epoch(net, my_loss, optimizer, epoch, epoch_size, epoch_size_val, gen, gen_val, regularization=False):
     loss = 0
     val_loss = 0

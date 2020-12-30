@@ -25,7 +25,7 @@ def img_resize(img, max_len):
 
 
 if __name__ == '__main__':
-    img_path = "image/cat.jpg"
+    img_path = "../draw/cat.jpg"
     image = cv2.imread(img_path)
     print(image.shape)
     resized_img, r = img_resize(image, 100)
