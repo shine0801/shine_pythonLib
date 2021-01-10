@@ -48,11 +48,10 @@ def statistics_data_number(root_path, classes):
 
 if __name__ == "__main__":
     # VOC数据格式目录
-    root_path = 'E:/pythonwork/yolov4/VOCdevkit/VOC2028'
+    root_path = 'E:/dataset/helmet_mask_research/train_dataset/region_segmentation'
     # 标记的类别
-    classes = ['person', 'hat']
+    classes = ['face', 'helmet', 'mask']
     number = statistics_data_number(root_path, classes)
-    print(0)
     # 输出各类别得数量
     for i in range(len(classes)):
         print('{}有{}个标记'.format(classes[i], number[i]))

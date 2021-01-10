@@ -30,7 +30,7 @@ def modify_label(root_path, res_name, modified_name):
     num = 0
 
     for i in range(len(label_files)):
-        file = open(os.path.join(label_path, label_files[i]))
+        file = open(os.path.join(label_path, label_files[i]), encoding='UTF-8')
         tree = ET.parse(file)
         root = tree.getroot()
         for obj in root.iter('object'):
@@ -44,8 +44,8 @@ def modify_label(root_path, res_name, modified_name):
 
 if __name__ == "__main__":
     # VOC数据格式目录
-    root_path = 'E:/pythonwork/yolov4/VOCdevkit/VOC2021'
-    num = modify_label(root_path, 'hat', 'face')
+    root_path = 'E:/dataset/helmet_mask_research/src_dataset/whole_mask_face'
+    num = modify_label(root_path, 'face', 'mask_face')
     print('共修改{}个name'.format(num))
 
 

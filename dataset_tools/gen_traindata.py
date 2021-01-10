@@ -2,7 +2,7 @@
 """
 **********************************
    File Name：     gen_traindata
-   Description :   生成训练数据和测试数据，生成.txt文件
+   Description :   生成最终训练数据或者测试，生成.txt文件
    Author :       shine
    date：          2020/10/20
 **********************************
@@ -12,79 +12,73 @@ import xml.etree.ElementTree as ET
 from random import shuffle
 
 
-def gen_train_data(root_path, classes, train_rate):
+def gen_train_data(root_path, filename , classes):
     """
        参数：
            root_path---VOC根目录
+           filename ----- 生成的文件名 ---测试集还是训练集
            classes---类别
-           train_num---训练数据占比
+
        返回值：
            N/A
+        生成文件：
+        在root_path下生成 filename
        """
-    wd = os.getcwd()
-    label_path = os.path.join(root_path, 'Annotations')
-    image_path = os.path.join(root_path, 'JPEGImages')
+    # 训练集或者测试集的.txt(只包括文件名，连后缀都不包括)
+    label_info_path = os.path.join(root_path, 'ImageSets/Main/' + filename)
 
-    save_path = os.path.join(root_path, 'ImageSets/Main')
-    f_train = open(os.path.join(save_path, 'train.txt'), 'w')
-    f_test = open(os.path.join(save_path, 'test.txt'), 'w')
+    # .xml文件的存放目录
+    label_path = os.path.join(root_path, 'Annotations/')
+    image_path = os.path.join(root_path, 'JPEGImages/')
 
-    # 读取标记文件和图片
-    label_files = os.listdir(label_path)
-    image_files = os.listdir(image_path)
+    # 保存生成的文件位置
+    save_path = os.path.join(root_path, filename)
 
-    shuffle(label_files)
+    f_info = open(label_info_path)
+    f_save = open(save_path, 'w')
 
-    train_label_list = label_files[:int(train_rate*len(label_files))]
-    test_label_list = list(set(label_files) - set(train_label_list))
+    label_list = f_info.readlines()
 
-    # 得到训练集
-    for label_name in train_label_list:
-        image_name = label_name.split('.')[0]
-        f_train.write(os.path.join(image_path, image_name + '.jpg'))
-        f = open(os.path.join(label_path, image_name + '.xml'), 'rb')
+    print(label_list)
+
+    # 生成数据
+    for label_name in label_list:
+
+        # 去掉\n字符
+
+        label_name = label_name.replace('\n', '')
+
+        # 写入图片的路径
+        f_save.write(os.path.join(image_path, label_name + '.jpg'))
+
+        # 打开.xml文件
+        f = open(os.path.join(label_path, label_name + '.xml'), 'rb')
         tree = ET.parse(f)
         root = tree.getroot()
 
         for obj in root.iter('object'):
-            difficult = obj.find('difficult').text
             cls = obj.find('name').text
-            if cls not in classes or int(difficult) == 1:
-                continue
             cls_id = classes.index(cls)
             xmlbox = obj.find('bndbox')
             b = (int(xmlbox.find('xmin').text), int(xmlbox.find('ymin').text), int(xmlbox.find('xmax').text),
                  int(xmlbox.find('ymax').text))
-            f_train.write(" " + ",".join([str(a) for a in b]) + ',' + str(cls_id))
-        f_train.write('\n')
+            f_save.write(" " + ",".join([str(a) for a in b]) + ',' + str(cls_id))
+        f_save.write('\n')
         f.close()
-    f_train.close()
 
-    # 得到测试集
-    for image_name in test_label_list:
-        image_name = image_name.split('.')[0]
-        f_test.write(os.path.join(image_path, image_name + '.jpg'))
-        f = open(os.path.join(label_path, image_name + '.xml'))
-        tree = ET.parse(f)
-        root = tree.getroot()
-
-        for obj in root.iter('object'):
-            difficult = obj.find('difficult').text
-            cls = obj.find('name').text
-            if cls not in classes or int(difficult) == 1:
-                continue
-            cls_id = classes.index(cls)
-            xmlbox = obj.find('bndbox')
-            b = (int(xmlbox.find('xmin').text), int(xmlbox.find('ymin').text), int(xmlbox.find('xmax').text),
-                 int(xmlbox.find('ymax').text))
-            f_test.write(" " + ",".join([str(a) for a in b]) + ',' + str(cls_id))
-        f_test.write('\n')
-        f.close()
-    f_test.close()
+    # 关闭两个txt文件
+    f_info.close()
+    f_save.close()
 
 
 if __name__ == "__main__":
     # VOC数据格式目录
-    root_path = 'E:/pythonwork/yolov4/VOCdevkit/VOC2028'
-    classes = ['hat', 'person']
-    gen_train_data(root_path, classes, 0.9)
+    root_path = 'E:/dataset/helmet_mask_research/train_dataset/region_segmentation'
+
+    # 测试集还是训练集
+    filename = 'train.txt'
+
+    # 数据中的类别
+    classes = ['face', 'helmet', 'mask']
+
+    gen_train_data(root_path, filename, classes)

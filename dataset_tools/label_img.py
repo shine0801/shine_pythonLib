@@ -3,67 +3,65 @@
 @author:Shine Jo
 @file:mytools-PyCharm.py
 @time:2020/6/2 18:34
-@function:打标过程中，判断xml文件和图片是否一一对应，并删除没有标签的图片
+@function: 删除两个文件夹中文件名集合集合中的差集文件
 """
 
 import os
 
 # 图片路径
-img_path = "E:\pythonwork\yolov4\VOCdevkit\VOC2021\JPEGImages"
+path_1 = "E:/dataset/helmet_mask_research/src_dataset/sp_mask_face/Annotations"
 # label路径
-label_path = "E:\pythonwork\yolov4\VOCdevkit\VOC2021\Annotations"
+path_2 = "E:/dataset/helmet_mask_research/src_dataset/sp_mask_face/JPEGImages"
 
+suffix_1 = '.xml'
+suffix_2 = '.jpg'
 num = 0
-label_array = []
-img_array = []
-for item in os.listdir(label_path):
-    # label_name = item.split("_")[2]
-    # label_name = label_name.split(".")[0]
-    label_name=item.split('.')[0]
-    label_array.append(label_name)
+array_1 = []
+array_2 = []
 
-for img_item in os.listdir(img_path):
-    # img_name = img_item.split("_")[2]
-    # img_name = img_name.split(".")[0]
-    img_name = img_item.split(".")[0]
-    img_array.append(img_name)
+for item in os.listdir(path_1):
+    filename = item.split('.')[0]
+    array_1.append(filename)
 
-print("label数量为："+str(label_array.__len__()))
-print("图片数量为："+str(img_array.__len__()))
+for item in os.listdir(path_2):
+    filename = item.split(".")[0]
+    array_2.append(filename)
+
+
+print("label数量为："+str(array_1.__len__()))
+print("图片数量为："+str(array_2.__len__()))
 
 
 print("----------------------------------------")
-del_array = list(set(img_array) -set(label_array))
-print(del_array)
-print("差集（应该删除多余的图片）数量为："+str(del_array.__len__()))
-
-
+del_array_1 = list(set(array_1) - set(array_2))
+print(del_array_1)
+print("path1差集（应该删除多余的图片）数量为："+str(del_array_1.__len__()))
 
 print("----------------------------------------")
-del_array1 = list(set(label_array) -set(img_array))
-print(del_array1)
-print("反差集（应该删除多余的label）数量为："+str(del_array1.__len__()))
-
-
+del_array_2 = list(set(array_2) -set(array_1))
+print(del_array_2)
+print("path2反差集（应该删除多余的label）数量为："+str(del_array_2.__len__()))
 
 print("----------------------------------------")
-intersection_array = list(set(img_array).intersection(label_array))
+intersection_array = list(set(array_1).intersection(array_2))
 print(intersection_array)
 print("交集（应该保留）数量为："+str(intersection_array.__len__()))
 
+exit(0)
+
 """以下操作将对磁盘文件进项删除操作，建议先备份文件或者手动删除文件"""
 
-# 删除图片操作
-for item in del_array:
-   del_img_name = "RMFD_part2_"+item+".jpg"
-   del_img_path = os.path.join(img_path, del_img_name)
-   os.remove(del_img_path)
+# 删除path_1操作
+for item in del_array_1:
+   del_name = item+suffix_1
+   del_path = os.path.join(path_1, del_name)
+   os.remove(del_path)
 
-# 删除label文件
-for item in del_array1:
-   del_label_name = item+".xml"
-   del_label_path = os.path.join(label_path, del_label_name)
-   os.remove(del_label_path)
+# 删除path_2文件
+for item in del_array_2:
+   del_name = item+suffix_2
+   del_path = os.path.join(path_2, del_name)
+   os.remove(del_path)
 
 
 
