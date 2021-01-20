@@ -50,14 +50,7 @@ if __name__ == "__main__":
                 image_save = image[b[1]:b[3], b[0]:b[2]]
                 count = count + 1
                 try:
-                    cv2.imwrite(os.path.join(save_path, prefix_name, img_name + '_' + str(count) + '.jpg'), image_save)
+                    cv2.imwrite(os.path.join(save_path, prefix_name, prefix_name + '_' + str(count) + '.jpg'), image_save)
                 except:
                     print(img_name)
     print(count)
-
-
-
-
-
-
-

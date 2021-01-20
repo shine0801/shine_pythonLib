@@ -137,10 +137,11 @@ def draw_rectangle_pil(image, boxes, classes, colors):
 if __name__ == "__main__":
 
     # 绘制图片的路径
-    image_path = 'test.jpg'  # 960*540
+    image_path = 'E:/dataset/WIDER/WIDER_train/images/0--Parade/0_Parade_marchingband_1_446.jpg'  # 960*540
 
     # boxes
-    boxes = [[432, 156, 476, 215, 0], [212, 99, 259, 181, 1], [633, 132, 683, 213, 2], [321, 149, 354, 182, 3]]
+    # boxes = [[432, 156, 476, 215, 0], [212, 99, 259, 181, 1], [633, 132, 683, 213, 2], [321, 149, 354, 182, 3]]
+    boxes = [[628, 69, 151+628, 182+69, 0], [414, 171, 129+414, 174+171, 1], [206, 120, 126+206, 18+120, 2], [246, 14, 35+246, 41+14, 3]]
 
     # classes
     classes = ['mask_hat', 'mask', 'hat', 'face']

@@ -58,7 +58,10 @@ def gen_train_data(root_path, filename , classes):
 
         for obj in root.iter('object'):
             cls = obj.find('name').text
-            cls_id = classes.index(cls)
+            try:
+               cls_id = classes.index(cls)
+            except:
+                print(label_name)
             xmlbox = obj.find('bndbox')
             b = (int(xmlbox.find('xmin').text), int(xmlbox.find('ymin').text), int(xmlbox.find('xmax').text),
                  int(xmlbox.find('ymax').text))
@@ -73,12 +76,12 @@ def gen_train_data(root_path, filename , classes):
 
 if __name__ == "__main__":
     # VOC数据格式目录
-    root_path = 'E:/dataset/helmet_mask_research/train_dataset/region_segmentation'
+    root_path = 'E:/dataset/helmet_mask_research/src_dataset/whole_helmet_face'
 
     # 测试集还是训练集
-    filename = 'train.txt'
+    filename = 'helmet_test.txt'
 
     # 数据中的类别
-    classes = ['face', 'helmet', 'mask']
+    classes = ['face', 'helmet_face', 'mask_face']
 
     gen_train_data(root_path, filename, classes)

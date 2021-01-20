@@ -33,7 +33,7 @@ def merge_file(path1, path2, path3):
 
 if __name__ == "__main__":
 
-    filename = 'test.txt'
+    filename = 'train.txt'
     path1 = 'E:/dataset/helmet_mask_research/src_dataset/sp_helmet_face/ImageSets/Main/' + filename
     path2 = 'E:/dataset/helmet_mask_research/src_dataset/sp_mask_face/ImageSets/Main/' + filename
     path3 = 'E:/dataset/helmet_mask_research/train_dataset/region_segmentation/ImageSets/Main/' + filename

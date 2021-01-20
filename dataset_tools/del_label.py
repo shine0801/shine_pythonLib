@@ -39,7 +39,7 @@ def del_laebl(src_path, label_name):
 
 if __name__ == "__main__":
     # VOC数据格式目录
-    src_path = "E:/dataset/helmet_mask_research/src_dataset/whole_helmel_face"
+    src_path = "E:/dataset/helmet_mask_research/src_dataset/whole_helmet_face/"
     label_name = "helmet"
     num = del_laebl(src_path, label_name)
     print('共删除{}个{}'.format(num, label_name))

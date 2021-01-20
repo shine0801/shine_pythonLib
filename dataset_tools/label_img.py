@@ -9,9 +9,9 @@
 import os
 
 # 图片路径
-path_1 = "E:/dataset/helmet_mask_research/src_dataset/sp_mask_face/Annotations"
+path_1 = "E:/dataset/helmet_mask_research/src_dataset/whole_mask_face/Annotations"
 # label路径
-path_2 = "E:/dataset/helmet_mask_research/src_dataset/sp_mask_face/JPEGImages"
+path_2 = "E:/dataset/helmet_mask_research/src_dataset/whole_mask_face/JPEGImages"
 
 suffix_1 = '.xml'
 suffix_2 = '.jpg'
@@ -46,8 +46,6 @@ print("----------------------------------------")
 intersection_array = list(set(array_1).intersection(array_2))
 print(intersection_array)
 print("交集（应该保留）数量为："+str(intersection_array.__len__()))
-
-exit(0)
 
 """以下操作将对磁盘文件进项删除操作，建议先备份文件或者手动删除文件"""
 
